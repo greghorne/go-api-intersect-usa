@@ -1,0 +1,20 @@
+sudo curl -O https://storage.googleapis.com/golang/go1.10.1.linux-386.tar.gz
+sudo tar -xvf go1.10.1.linux-386.tar.gz
+sudo mv go /usr/local
+
+vi ~/.profile
+add - export PATH=$PATH:/usr/local/go/bin
+add - export GOPATH=/vagrant/code
+
+# set PATH so it includes user's private bin directories
+export GOPATH=/vagrant/code
+export GOROOT=/usr/local/go
+PATH="$HOME/bin:$HOME/.local/bin:/usr/local/go/bin:$GOPATH:$GOROOT:$PATH"
+
+git config --global credential.helper 'cache --timeout=3600'
+git config --global user.email 'greghorne@hotmail.com'
+git config --global user.name 'greghorne'
+
+
+go get -u -v github.com/gorilla/mux
+
