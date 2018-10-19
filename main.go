@@ -7,17 +7,28 @@ import (
 	"log"
 	"net/http"
 	"github.com/gorilla/mux"
+	"encoding/json"
 )
 
 func main() {
 	fmt.Println("main...")
 
 	router := mux.NewRouter()
-	router.HandleFunc("/v1/getinfo/{xy}", v1GetXY).Methods("GET")
+	router.HandleFunc("/v1/getinfo/{lng}{lat}", v1GetXY).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
 
 func v1GetXY (w http.ResponseWriter, r *http.Request) {
-	fmt.Println(w)
-	fmt.Println(r)
+	fmt.Println("=====================")
+	params := mux.Vars(r)
+	fmt.Println(params)
+	fmt.Println(params["lng"])
+	fmt.Println(params["lat"])
+	
+	json.NewEncoder(w).Encode("hello:there")
+	
+	// fmt.Println(w)
+	// fmt.Println("=====================")
+	// fmt.Println(r)
+	// fmt.Println("")
 }
