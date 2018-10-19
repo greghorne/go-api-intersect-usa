@@ -13,8 +13,11 @@ func main() {
 	fmt.Println("main...")
 
 	router := mux.NewRouter()
-	router.HandleFunc("/v1/getinfo/{xy}", V1GetXY).Methods("GET")
+	router.HandleFunc("/v1/getinfo/{xy}", v1GetXY).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
 
-func V1GetXY (w http.ResponseWriter, r *http.Request) {}
+func v1GetXY (w http.ResponseWriter, r *http.Request) {
+	fmt.Println(w)
+	fmt.Println(r)
+}
