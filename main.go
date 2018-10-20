@@ -14,7 +14,7 @@ func main() {
 	fmt.Println("main...")
 
 	router := mux.NewRouter()
-	router.HandleFunc("/v1/getinfo/{lng}{lat}", v1GetXY).Methods("GET")
+	router.HandleFunc("/v1/getinfo/lng/{lng}/lat/{lat}", v1GetXY).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
 
@@ -27,8 +27,5 @@ func v1GetXY (w http.ResponseWriter, r *http.Request) {
 	
 	json.NewEncoder(w).Encode("hello:there")
 	
-	// fmt.Println(w)
-	// fmt.Println("=====================")
-	// fmt.Println(r)
-	// fmt.Println("")
+
 }
