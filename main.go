@@ -11,7 +11,6 @@ import (
 	_ "github.com/lib/pq"
 	"os"
 	"database/sql"
-	"strconv"
 )
 
 func main() {
@@ -58,8 +57,8 @@ func conn() {
 func v1GetXY (w http.ResponseWriter, r *http.Request) {
 
 	params := mux.Vars(r)
-	lng := strconv.ParseFloat(params["lng"], 64)
-	lat := strconv.ParseFloat(params["lat"], 64)
+	lng := params["lng"]
+	lat := params["lat"]
 	fmt.Println(lng + ", " + lat)
 	
 	// pass data back to client as JSON
@@ -71,7 +70,13 @@ func v1GetXY (w http.ResponseWriter, r *http.Request) {
 	password := os.Getenv("GO_PASSWORD")
 	port     := os.Getenv("GO_PORT")
 
-	strConnect := "host=" + host + " database=" + database + " user=" + user + " password=" + password + " port=" + port + " sslmode=require"
+	strConnect := "host=" + host + 
+				  " database=" + database + 
+				  " user=" + user + 
+				  " password=" + password + 
+				  " port=" + port + 
+				  " sslmode=require"
+				  
 	fmt.Println(strConnect)
 
 	db, err := sql.Open("postgres", strConnect)
@@ -79,7 +84,7 @@ func v1GetXY (w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	} else {
-		row, err := db.Query('select z_tl_2016_us_state($1, $2)', lng, lat)
+		row := db.Query('select z_tl_2016_us_state($1, $2)', -95, 36)
 	}
 	// fmt.Println(conn)
 	
