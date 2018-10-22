@@ -24,9 +24,11 @@ var const_db_type = "postgres"
 
 // ============================================================
 func main() {
+	
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/intersects-usa/{lng}/{lat}", v1IntersectsUSA).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", router))
+	
 }
 // ============================================================
 
@@ -53,6 +55,7 @@ func xyIntersectsUSA(xLng string, yLat string) (bIntersects bool) {
 	} 
 
 	return
+
 }
 // ============================================================
 
