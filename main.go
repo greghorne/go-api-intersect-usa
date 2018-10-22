@@ -8,31 +8,34 @@ import (
 	"os"
 	"database/sql"
 	"encoding/json"
-	// "fmt"
 )
 
+// ============================================================
+var const_connect_string = 	" host="     + os.Getenv("GO_HOST") + 
+	    					" database=" + os.Getenv("GO_DATABASE") + 
+							" user="     + os.Getenv("GO_USER") + 
+							" password=" + os.Getenv("GO_PASSWORD") + 
+							" port="     + os.Getenv("GO_PORT") + 
+	 						" sslmode=require"
+
+var const_db_type = "postgres"
+// ============================================================
+
+
+// ============================================================
 func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/intersects-usa/{lng}/{lat}", v1IntersectsUSA).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
+// ============================================================
 
 
+// ============================================================
 func xyIntersectsUSA(xLng string, yLat string) (bIntersects bool) {
 
-	host     := os.Getenv("GO_HOST")
-	database := os.Getenv("GO_DATABASE")
-	user     := os.Getenv("GO_USER")
-	password := os.Getenv("GO_PASSWORD")
-	port     := os.Getenv("GO_PORT")
-
-	// connect to pg
-	db, err := sql.Open("postgres", " host="     + host + 
-									" database=" + database + 
-									" user="     + user + 
-									" password=" + password + 
-									" port="     + port + 
-									" sslmode=require")
+	// connect to db
+	db, err := sql.Open(const_db_type, const_connect_string)
 	
 	defer db.Close()
 	if err != nil { log.Fatal(err) }
@@ -51,9 +54,10 @@ func xyIntersectsUSA(xLng string, yLat string) (bIntersects bool) {
 
 	return
 }
+// ============================================================
 
 
-
+// ============================================================
 func v1IntersectsUSA (w http.ResponseWriter, r *http.Request) {
 
 	params := mux.Vars(r)
@@ -64,3 +68,4 @@ func v1IntersectsUSA (w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(jsonResult)
 
 }
+// ============================================================
