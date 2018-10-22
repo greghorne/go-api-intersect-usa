@@ -8,7 +8,7 @@ I use this functionality in a few of my other personal projects so  I may point 
 
 _**API:**_ https://someserver.com/v1/getinfo/{lng}/{lat}
 
-    - ex. https://someserver.com/v1/getinfo/-95.992775/36.153980 ==> returns 1 (Oklahoma)
-    - ex. https://someserver.com/v1/getinfo/48.516388/15.552727  ==> returns 0 (Yemen)
+    - ex. https://someserver.com/v1/intersects-usa/-95.992775/36.153980 ==> returns 1 (Oklahoma)
+    - ex. https://someserver.com/v1/intersects-usa/48.516388/15.552727  ==> returns 0 (Yemen)
 
 _**Depolyment:**_ ?
