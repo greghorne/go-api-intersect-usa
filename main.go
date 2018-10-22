@@ -29,7 +29,7 @@ type XYInfo struct {
 }
 
 
-func xyValid(lng string, lat string) (valid bool) {
+func xyValid(xlng string, ylat string) (valid bool) {
 
 	host     := os.Getenv("GO_HOST")
 	database := os.Getenv("GO_DATABASE")
@@ -45,13 +45,32 @@ func xyValid(lng string, lat string) (valid bool) {
 				  " sslmode=require"
 
 	valid = false
-
+	// fmt.Println(strConnect)
 	db, err := sql.Open("postgres", strConnect)
 	if err != nil {
 		log.Fatal(err)
 	}
-	rows, err := db.Query('select z_tl_2016_us_state($1, $2)', lng, lat)
-	ftm.Println(rows)		
+	
+
+	var strQuery = "select z_tl_2016_us_state(-95, 36);"
+	rows, err := db.Query(strQuery)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	
+	var name string
+	if err != nil {
+		log.Fatal(err)
+	  }
+	  for rows.Next() {
+		err := rows.Scan(&name)
+		if err != nil {
+		  log.Fatal(err)
+		}
+		log.Println(name)
+	  }	
 	return	
 }
 
@@ -63,7 +82,7 @@ func v1GetXY (w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	lng := params["lng"]
 	lat := params["lat"]
-	fmt.Println(lng + ", " + lat)
+	// fmt.Println(lng + ", " + lat)
 	fmt.Println(xyValid(lng, lat))
 	
 	// pass data back to client as JSON
