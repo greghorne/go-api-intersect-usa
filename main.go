@@ -3,34 +3,23 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"github.com/gorilla/mux"
-	// "encoding/json"
 	_ "github.com/lib/pq"
 	"os"
 	"database/sql"
-	// "strconv"
+	"encoding/json"
 )
 
 func main() {
-	fmt.Println("main...")
-
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/getinfo/{lng}/{lat}", v1GetXY).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
 
 
-type XYInfo struct {
-	Country	string
-	Name1	string
-	Name2	string
-}
-
-
-func xyValid(xlng string, ylat string) (valid bool) {
+func xyValid(xlng string, ylat string) (nValid int) {
 
 	host     := os.Getenv("GO_HOST")
 	database := os.Getenv("GO_DATABASE")
@@ -45,38 +34,31 @@ func xyValid(xlng string, ylat string) (valid bool) {
 				  " port="     + port + 
 				  " sslmode=require"
 
-	valid = false
+	nValid = 0  // false
 
-	// ===============
+	// connect to pg
 	db, err := sql.Open("postgres", strConnect)
+	
+	defer db.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
-	// ===============
-
-	// ===============
+	
+	// exec pg funtion select z_tl_2016_us_state(lng, lat)
 	var strQuery = "select z_tl_2016_us_state($1, $2);"
-	// var strQuery = "select z_tl_2016_us_state(48, 15);"  Yemen
 	rows, err := db.Query(strQuery, xlng, ylat)
+	
 	defer rows.Close()
-
 	if err != nil {
 		log.Fatal(err)
 	}
-	// ===============
 
-	// ===============
-	// counter:=0
 	for rows.Next() {
-		  valid = true
+		  nValid = 1  // has row, true
 		  return
 	}
-	// fmt.Println(strconv.Itoa(counter))
-
-	return	
+	return
 }
-
-
 
 
 func v1GetXY (w http.ResponseWriter, r *http.Request) {
@@ -84,48 +66,8 @@ func v1GetXY (w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	lng := params["lng"]
 	lat := params["lat"]
-	// fmt.Println(lng + ", " + lat)
-	fmt.Println(xyValid(lng, lat))
-	
-	// pass data back to client as JSON
-	// json.NewEncoder(w).Encode(info)
 
-	// host     := os.Getenv("GO_HOST")
-	// database := os.Getenv("GO_DATABASE")
-	// user     := os.Getenv("GO_USER")
-	// password := os.Getenv("GO_PASSWORD")
-	// port     := os.Getenv("GO_PORT")
-
-	// strConnect := "host=" + host + 
-	// 			  " database=" + database + 
-	// 			  " user=" + user + 
-	// 			  " password=" + password + 
-	// 			  " port=" + port + 
-	// 			  " sslmode=require"
-
-	// fmt.Println(strConnect)
-	// conn := conn(strConnect)
-	// fmt.Println(conn)
-
-	// if (conn != nil) {
-	// 	rows , err := conn.Query('select z_tl_2016_us_state($1, $2)', lng, lat)
-		
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// 	return
-	// } else {
-	// 	fmt.Println("error: unable to connect to database")
-	// }
-
-	// db, err := sql.Open("postgres", strConnect)
-	// fmt.Println(db)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// } else {
-	// 	row := db.Query('select z_tl_2016_us_state($1, $2)', -95, 36)
-	// }
-	// fmt.Println(conn)
-	
+	nValid := xyValid(lng, lat)
+	json.NewEncoder(w).Encode(nValid)
 
 }
