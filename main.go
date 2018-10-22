@@ -11,6 +11,7 @@ import (
 	_ "github.com/lib/pq"
 	"os"
 	"database/sql"
+	// "strconv"
 )
 
 func main() {
@@ -45,32 +46,33 @@ func xyValid(xlng string, ylat string) (valid bool) {
 				  " sslmode=require"
 
 	valid = false
-	// fmt.Println(strConnect)
+
+	// ===============
 	db, err := sql.Open("postgres", strConnect)
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+	// ===============
 
-	var strQuery = "select z_tl_2016_us_state(-95, 36);"
-	rows, err := db.Query(strQuery)
+	// ===============
+	var strQuery = "select z_tl_2016_us_state($1, $2);"
+	// var strQuery = "select z_tl_2016_us_state(48, 15);"  Yemen
+	rows, err := db.Query(strQuery, xlng, ylat)
+	defer rows.Close()
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer rows.Close()
-	
-	var name string
-	if err != nil {
-		log.Fatal(err)
-	  }
-	  for rows.Next() {
-		err := rows.Scan(&name)
-		if err != nil {
-		  log.Fatal(err)
-		}
-		log.Println(name)
-	  }	
+	// ===============
+
+	// ===============
+	// counter:=0
+	for rows.Next() {
+		  valid = true
+		  return
+	}
+	// fmt.Println(strconv.Itoa(counter))
+
 	return	
 }
 
