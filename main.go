@@ -1,5 +1,3 @@
-// https://www.codementor.io/codehakase/building-a-restful-api-with-golang-a6yivzqdo
-
 package main
 
 import (
@@ -10,16 +8,17 @@ import (
 	"os"
 	"database/sql"
 	"encoding/json"
+	// "fmt"
 )
 
 func main() {
 	router := mux.NewRouter()
-	router.HandleFunc("/v1/intersects-usa/{lng}/{lat}", v1GetXY).Methods("GET")
+	router.HandleFunc("/v1/intersects-usa/{lng}/{lat}", v1IntersectsUSA).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
 
 
-func xyValid(xlng string, ylat string) (nValid int) {
+func xyIntersectsUSA(xLng string, yLat string) (bIntersects bool) {
 
 	host     := os.Getenv("GO_HOST")
 	database := os.Getenv("GO_DATABASE")
@@ -27,47 +26,41 @@ func xyValid(xlng string, ylat string) (nValid int) {
 	password := os.Getenv("GO_PASSWORD")
 	port     := os.Getenv("GO_PORT")
 
-	strConnect := "host="      + host + 
-				  " database=" + database + 
-				  " user="     + user + 
-				  " password=" + password + 
-				  " port="     + port + 
-				  " sslmode=require"
-
-	nValid = 0  // false
-
 	// connect to pg
-	db, err := sql.Open("postgres", strConnect)
+	db, err := sql.Open("postgres", " host="     + host + 
+									" database=" + database + 
+									" user="     + user + 
+									" password=" + password + 
+									" port="     + port + 
+									" sslmode=require")
 	
 	defer db.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
+	if err != nil { log.Fatal(err) }
 	
 	// exec pg funtion select z_tl_2016_us_state(lng, lat)
 	var strQuery = "select z_tl_2016_us_state($1, $2);"
-	rows, err := db.Query(strQuery, xlng, ylat)
+	rows, err   := db.Query(strQuery, xLng, yLat)
 	
 	defer rows.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
+	if err != nil { log.Fatal(err) }
 
+	bIntersects = false
 	for rows.Next() {
-		  nValid = 1  // has row, true
-		  return
-	}
+		bIntersects = true
+	} 
+
 	return
 }
 
 
-func v1GetXY (w http.ResponseWriter, r *http.Request) {
+
+func v1IntersectsUSA (w http.ResponseWriter, r *http.Request) {
 
 	params := mux.Vars(r)
-	lng := params["lng"]
-	lat := params["lat"]
 
-	nValid := xyValid(lng, lat)
-	json.NewEncoder(w).Encode(nValid)
+	bIntersects := xyIntersectsUSA(params["lng"], params["lat"])
+    jsonResult  := map[string]bool{"intersects": bIntersects}
+
+	json.NewEncoder(w).Encode(jsonResult)
 
 }
