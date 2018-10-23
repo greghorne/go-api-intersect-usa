@@ -38,6 +38,8 @@ func main() {
 // ============================================================
 func xyIntersectsUSA(xLng string, yLat string) (bIntersects bool) {
 
+	fmt.Println("intersect called...")
+	
 	// connect to db
 	db, err := sql.Open(const_db_type, const_connect_string)
 	
