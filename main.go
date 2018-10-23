@@ -8,6 +8,7 @@ import (
 	"os"
 	"database/sql"
 	"encoding/json"
+	"fmt"
 )
 
 // ============================================================
@@ -25,10 +26,11 @@ var const_db_type = "postgres"
 // ============================================================
 func main() {
 	
+	fmt.Println("main called...")
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/intersects-usa/{lng}/{lat}", v1IntersectsUSA).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", router))
-	
+
 }
 // ============================================================
 
