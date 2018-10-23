@@ -14,3 +14,10 @@ _**API:**_ https://zotac1.ddns.net/v1/getinfo/{lng}/{lat}
 _**Depolyment:**_ 
 
 	- Docker Container on Ubuntu Server 18.04 - Phenom II x6 1045T - 16GB RAM - 160GB SSD
+
+_**Tech Stack:**_
+
+	- go1.10.1 linux/386
+	- Docker version 18.06.1-ce, build e68fc7a
+	- Ubuntu Server 18.04
+	- Postman (testing)
