@@ -4,12 +4,14 @@ _**First try at GOLANG.**_
 
 Write and deploy a simple API where given an x,y coordinate the API will determine if the coordinates intersect U.S. boundaries.  Return value is 1 (true) or 0 (false).
 
+The API interacts with a Postgres/PostGIS server loaded with U.S. boundaries.  This DB is running on a Raspberry Pi II.
+
 I use this functionality in a few of my other personal projects so  I may point them to this API once deployed.
 
 _**API:**_ https://zotac1.ddns.net/v1/getinfo/{lng}/{lat}
 
-    - ex. http://zotac1.ddns.net/v1/intersects-usa/-95.992775/36.153980 ==> returns 1 (Oklahoma)
-    - ex. http://zotac1.ddns.net/v1/intersects-usa/48.516388/15.552727  ==> returns 0 (Yemen)
+    - ex. http://zotac1.ddns.net:8000/v1/intersects-usa/-95.992775/36.153980 ==> {"intersects":true} (Oklahoma)
+    - ex. http://zotac1.ddns.net:8000/v1/intersects-usa/48.516388/15.552727  ==> {"intersects":false} (Yemen)
 
 _**Depolyment:**_ 
 
