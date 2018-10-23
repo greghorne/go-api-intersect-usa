@@ -19,7 +19,8 @@ _**Depolyment:**_
 
 _**Tech Stack:**_
 
+    - Vagrant ubuntu/xenial32
 	- go1.10.1 linux/386
+    - Postman (testing)
 	- Docker version 18.06.1-ce, build e68fc7a
 	- Ubuntu Server 18.04
-	- Postman (testing)
