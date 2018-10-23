@@ -12,12 +12,12 @@ import (
 )
 
 // ============================================================
-var const_connect_string = 	" host="     + os.Getenv("GO_HOST") + 
-	    					" database=" + os.Getenv("GO_DATABASE") + 
-							" user="     + os.Getenv("GO_USER") + 
-							" password=" + os.Getenv("GO_PASSWORD") + 
-							" port="     + os.Getenv("GO_PORT") + 
-	 						" sslmode=require"
+var const_connect_string	=	" host="		+ os.Getenv("GO_HOST") + 
+	    						" database="	+ os.Getenv("GO_DATABASE") + 
+								" user="		+ os.Getenv("GO_USER") + 
+								" password="	+ os.Getenv("GO_PASSWORD") + 
+								" port="		+ os.Getenv("GO_PORT") + 
+	 							" sslmode=require"
 
 var const_db_type = "postgres"
 // ============================================================
@@ -67,7 +67,7 @@ func v1IntersectsUSA (w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	bIntersects := xyIntersectsUSA(params["lng"], params["lat"])
-    jsonResult  := map[string]bool{"intersects": bIntersects}
+	jsonResult  := map[string]bool{"intersects": bIntersects}
 
 	json.NewEncoder(w).Encode(jsonResult)
 
