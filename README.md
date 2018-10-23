@@ -6,9 +6,9 @@ Write and deploy a simple API where given an x,y coordinate the API will determi
 
 I use this functionality in a few of my other personal projects so  I may point them to this API once deployed.
 
-_**API:**_ https://someserver.com/v1/getinfo/{lng}/{lat}
+_**API:**_ https://zotac1.ddns.net/v1/getinfo/{lng}/{lat}
 
-    - ex. https://someserver.com/v1/intersects-usa/-95.992775/36.153980 ==> returns 1 (Oklahoma)
-    - ex. https://someserver.com/v1/intersects-usa/48.516388/15.552727  ==> returns 0 (Yemen)
+    - ex. http://zotac1.ddns.net/v1/intersects-usa/-95.992775/36.153980 ==> returns 1 (Oklahoma)
+    - ex. http://zotac1.ddns.net/v1/intersects-usa/48.516388/15.552727  ==> returns 0 (Yemen)
 
 _**Depolyment:**_ ?
