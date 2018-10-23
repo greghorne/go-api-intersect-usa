@@ -8,7 +8,8 @@ import (
 	"os"
 	"database/sql"
 	"encoding/json"
-	"fmt"
+	// "fm:w
+	t"
 )
 
 // ============================================================
@@ -26,7 +27,6 @@ var const_db_type = "postgres"
 // ============================================================
 func main() {
 	
-	fmt.Println("main called...")
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/intersects-usa/{lng}/{lat}", v1IntersectsUSA).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8000", router))
@@ -38,8 +38,6 @@ func main() {
 // ============================================================
 func xyIntersectsUSA(xLng string, yLat string) (bIntersects bool) {
 
-	fmt.Println("intersect called...")
-	
 	// connect to db
 	db, err := sql.Open(const_db_type, const_connect_string)
 	
