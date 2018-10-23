@@ -8,7 +8,7 @@ The API interacts with a Postgres/PostGIS server loaded with U.S. boundaries.  T
 
 I use this functionality in a few of my other personal projects so  I may point them to this API once deployed.
 
-_**API:**_ https://zotac1.ddns.net/v1/getinfo/{lng}/{lat}
+_**API:**_ http://zotac1.ddns.net/v1/getinfo/{lng}/{lat}
 
     - ex. http://zotac1.ddns.net:8000/v1/intersects-usa/-95.992775/36.153980 ==> {"intersects":true} (Oklahoma)
     - ex. http://zotac1.ddns.net:8000/v1/intersects-usa/48.516388/15.552727  ==> {"intersects":false} (Yemen)
