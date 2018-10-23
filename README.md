@@ -1,4 +1,4 @@
-# go-api-intersects-usa
+# go-api-intersect-usa
 
 _**First try at GOLANG.**_
 
