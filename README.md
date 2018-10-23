@@ -11,4 +11,6 @@ _**API:**_ https://zotac1.ddns.net/v1/getinfo/{lng}/{lat}
     - ex. http://zotac1.ddns.net/v1/intersects-usa/-95.992775/36.153980 ==> returns 1 (Oklahoma)
     - ex. http://zotac1.ddns.net/v1/intersects-usa/48.516388/15.552727  ==> returns 0 (Yemen)
 
-_**Depolyment:**_ ?
+_**Depolyment:**_ 
+
+	- Docker Container on Ubuntu Server 18.04 - Phenom II x6 1045T - 16GB RAM - 160GB SSD
