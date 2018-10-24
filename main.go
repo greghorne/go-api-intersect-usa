@@ -12,6 +12,7 @@ import (
 )
 
 // ============================================================
+// connet string to pg server
 var const_connect_string =" host=" + os.Getenv("GO_HOST") + 
 	" database=" + os.Getenv("GO_DATABASE") + 
 	" user=" + os.Getenv("GO_USER") + 
@@ -43,7 +44,7 @@ func xyIntersectsUSA(xLng string, yLat string) (bIntersects bool) {
 	defer db.Close()
 	if err != nil { log.Fatal(err) }
 	
-	// exec pg funtion select z_tl_2016_us_state(lng, lat)
+	// pg funtion select z_tl_2016_us_state(lng, lat)
 	var strQuery = "select z_tl_2016_us_state($1, $2);"
 	rows, err   := db.Query(strQuery, xLng, yLat)
 	
