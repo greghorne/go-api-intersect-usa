@@ -2,11 +2,9 @@
 
 _**First try at GOLANG.**_
 
-Write and deploy a simple API where given an x,y coordinate the API will determine if the coordinates intersect U.S. State boundaries.  Returns true or false.
+Write and deploy a basic API where given an x,y coordinate the API will determine if the coordinates intersect U.S. State boundaries.  API returns true or false.
 
 The API interacts with a Postgres/PostGIS server loaded with U.S. boundaries.  The DB resides on a Raspberry Pi II.
-
-I use this functionality in a few of my other personal projects so  I may point them to this API once deployed.
 
 _**API:**_ 
 
@@ -19,7 +17,7 @@ _**API:**_
 
 _**Depolyment:**_ 
 
-	- Docker Container on Ubuntu Server 18.04 - Phenom II x6 1045T - 16GB RAM - 160GB SSD
+	- Docker Container on Ubuntu Server 18.04.1 - Phenom II x6 1045T - 16GB RAM
 
 _**Tech Stack:**_
 
