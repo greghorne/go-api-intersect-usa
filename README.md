@@ -17,12 +17,16 @@ _**API:**_
 
 _**Depolyment:**_ 
 
-	- Docker Container on Ubuntu Server 18.04.1 - Phenom II x6 1045T - 16GB RAM
+	- Docker Container on Raspberry Pi 3 Model B running HypriotOS (Debian v9.4)
 
 _**Tech Stack:**_
 
+	Developement
     - Vagrant ubuntu/xenial32
 	- go1.10.1 linux/386
     - Postman (testing)
-	- Docker version 18.06.1-ce, build e68fc7a
-	- Ubuntu Server 18.04
+    
+    Depolyment
+	- Docker version 18.04.0-ce, build 3d479c0
+	- go1.11.1 linux/arm64
+
