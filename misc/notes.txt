@@ -1,3 +1,6 @@
+========================================
+Setup -
+
 sudo curl -O https://storage.googleapis.com/golang/go1.10.1.linux-386.tar.gz
 sudo tar -xvf go1.10.1.linux-386.tar.gz
 sudo mv go /usr/local
@@ -12,9 +15,62 @@ export GOROOT=/usr/local/go
 PATH="$HOME/bin:$HOME/.local/bin:/usr/local/go/bin:$GOPATH:$GOROOT:$PATH"
 
 git config --global credential.helper 'cache --timeout=3600'
-git config --global user.email 'greghorne@hotmail.com'
-git config --global user.name 'greghorne'
+git config --global user.email 'email'
+git config --global user.name 'name'
 
 
 go get -u -v github.com/gorilla/mux
+go get -u -v github.com/lib/pq
+========================================
 
+
+========================================
+Dockerfile -
+FROM golang:latest
+COPY ./src/main.go /go
+
+ENV GOPATH /go
+
+EXPOSE 8000
+
+RUN go get -u -v github.com/gorilla/mux
+RUN go get -u -v github.com/lib/pq
+RUN go build
+
+CMD ["./go"]
+========================================
+
+
+========================================
+up.sh
+
+sudo docker rm go-api-intersect-usa
+
+rm -rf /home/kadmin/docker/go-api-intersect-usa/src
+mkdir /home/kadmin/docker/go-api-intersect-usa/src
+cd /home/kadmin/docker/go-api-intersect-usa/src
+
+git clone https://github.com/greghorne/go-api-intersect-usa .
+
+cd ..
+
+sudo docker build -t go-api-intersect-usa .
+
+sudo docker run -dit \
+-e GO_PORT=1234 \
+-e GO_DATABASE='abc' \
+-e GO_HOST='abc' \
+-e GO_USER='abc' \
+-e GO_PASSWORD='abc' \
+-p 8000:8000 \
+--restart unless-stopped \
+--name go-api-intersect-usa \
+go-api-intersect-usa
+========================================
+
+========================================
+down.sh
+
+sudo docker stop go-api-intersect-usa
+sudo docker rm go-api-intersect-usa
+========================================
