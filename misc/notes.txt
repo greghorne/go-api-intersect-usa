@@ -1,3 +1,7 @@
+This files contains setup, execution, conmmand and config type information used in this project.
+
+
+
 ========================================
 Setup -
 
