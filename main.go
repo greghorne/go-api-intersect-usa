@@ -44,7 +44,7 @@ func xyIntersectsUSA(xLng string, yLat string) (bIntersects bool) {
 	defer db.Close()
 	if err != nil { log.Fatal(err) }
 	
-	// pg funtion select z_tl_2016_us_state(lng, lat)
+	// call pg function select z_tl_2016_us_state(lng, lat)
 	var strQuery = "select z_tl_2016_us_state($1, $2);"
 	rows, err   := db.Query(strQuery, xLng, yLat)
 	
