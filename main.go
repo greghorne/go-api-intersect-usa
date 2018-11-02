@@ -70,6 +70,9 @@ func v1IntersectsUSA (w http.ResponseWriter, r *http.Request) {
 	bIntersects := xyIntersectsUSA(params["lng"], params["lat"])
 	jsonResult  := map[string]bool{"intersects": bIntersects}
 
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	
 	json.NewEncoder(w).Encode(jsonResult)
 
 }
